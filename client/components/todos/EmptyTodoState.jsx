@@ -1,4 +1,7 @@
-function EmptyTodoState() {
+import Heading from "../typography/Heading.jsx";
+import Text from "../typography/Text.jsx";
+
+export default function EmptyTodoState() {
   return (
     <div className="empty-state">
       <Heading level={3}>No tasks yet</Heading>

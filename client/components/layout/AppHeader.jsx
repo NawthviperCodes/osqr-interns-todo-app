@@ -1,4 +1,8 @@
-function AppHeader({ currentUser, onLogout }) {
+import Button from "../buttons/Button.jsx";
+import Heading from "../typography/Heading.jsx";
+import Text from "../typography/Text.jsx";
+
+export default function AppHeader({ currentUser, onLogout }) {
   return (
     <div className="header-row">
       <div>

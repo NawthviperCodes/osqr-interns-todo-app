@@ -16,7 +16,12 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "..", "client")));
+
+const builtClientPath = path.join(__dirname, "..", "client", "dist");
+const sourceClientPath = path.join(__dirname, "..", "client");
+
+app.use(express.static(builtClientPath));
+app.use(express.static(sourceClientPath));
 
 function hashPassword(password) {
   return crypto.createHash("sha256").update(password).digest("hex");
@@ -106,7 +111,7 @@ async function authMiddleware(req, res, next) {
 }
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "client", "index.html"));
+  res.sendFile(path.join(sourceClientPath, "index.html"));
 });
 
 app.post("/api/register", async (req, res) => {

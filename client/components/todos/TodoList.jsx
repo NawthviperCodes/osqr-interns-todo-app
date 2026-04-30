@@ -1,4 +1,7 @@
-function TodoList({
+import EmptyTodoState from "./EmptyTodoState.jsx";
+import TodoItem from "./TodoItem.jsx";
+
+export default function TodoList({
   todos,
   editingId,
   editingTitle,

@@ -1,3 +1,5 @@
+import { apiService } from "./todoService.js";
+
 const authService = {
   async register({ name, email, password }) {
     const response = await fetch("/api/register", {
@@ -40,3 +42,5 @@ const authService = {
     return apiService.handleResponse(response);
   }
 };
+
+export default authService;

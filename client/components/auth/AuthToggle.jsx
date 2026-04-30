@@ -1,4 +1,6 @@
-function AuthToggle({ authMode, onChangeMode }) {
+import Button from "../buttons/Button.jsx";
+
+export default function AuthToggle({ authMode, onChangeMode }) {
   return (
     <div className="auth-tabs">
       <Button

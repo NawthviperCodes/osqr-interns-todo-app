@@ -1,4 +1,4 @@
-function IconButton({ children, label, variant = "secondary", onClick }) {
+export default function IconButton({ children, label, variant = "secondary", onClick }) {
   return (
     <button
       type="button"

@@ -1,4 +1,8 @@
-function TodoItem({
+import React from "react";
+import Button from "../buttons/Button.jsx";
+import TodoCheckbox from "./TodoCheckbox.jsx";
+
+export default function TodoItem({
   todo,
   isEditing,
   editingTitle,

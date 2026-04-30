@@ -1,4 +1,4 @@
-function Button({ children, type = "button", variant = "primary", onClick, className = "" }) {
+export default function Button({ children, type = "button", variant = "primary", onClick, className = "" }) {
   const buttonClassName = `button button-${variant} ${className}`.trim();
 
   return (

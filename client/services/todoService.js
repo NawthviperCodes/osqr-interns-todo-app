@@ -1,4 +1,4 @@
-const apiService = {
+export const apiService = {
   authHeaders(token) {
     return {
       "Content-Type": "application/json",
@@ -55,3 +55,5 @@ const todoService = {
     return apiService.handleResponse(response);
   }
 };
+
+export default todoService;

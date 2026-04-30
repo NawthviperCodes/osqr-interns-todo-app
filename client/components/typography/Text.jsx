@@ -1,3 +1,3 @@
-function Text({ children, className = "" }) {
+export default function Text({ children, className = "" }) {
   return <p className={`text ${className}`.trim()}>{children}</p>;
 }

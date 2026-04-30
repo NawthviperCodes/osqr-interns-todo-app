@@ -1,4 +1,7 @@
-function LoginForm({ onLogin }) {
+import React from "react";
+import Button from "../buttons/Button.jsx";
+
+export default function LoginForm({ onLogin }) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 

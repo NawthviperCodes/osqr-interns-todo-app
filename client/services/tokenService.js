@@ -11,3 +11,5 @@ const tokenService = {
     localStorage.removeItem("token");
   }
 };
+
+export default tokenService;

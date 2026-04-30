@@ -1,4 +1,10 @@
-function TodoApp() {
+import React from "react";
+import AuthPage from "../pages/AuthPage.jsx";
+import TodoPage from "../pages/TodoPage.jsx";
+import useAuth from "../hooks/useAuth.js";
+import useTodos from "../hooks/useTodos.js";
+
+export default function TodoApp() {
   const [authMode, setAuthMode] = React.useState("login");
   const [message, setMessage] = React.useState("");
   const [editingId, setEditingId] = React.useState(null);

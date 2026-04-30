@@ -1,4 +1,8 @@
-function useAuth() {
+import React from "react";
+import authService from "../services/authService.js";
+import tokenService from "../services/tokenService.js";
+
+export default function useAuth() {
   const [token, setToken] = React.useState(tokenService.getToken());
   const [currentUser, setCurrentUser] = React.useState(null);
 

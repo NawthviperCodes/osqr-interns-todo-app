@@ -2,7 +2,7 @@ services:
   - type: web
     name: osqr-interns-todo-app
     runtime: node
-    buildCommand: npm install
+    buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
       - key: MONGODB_URI

@@ -1,4 +1,4 @@
-function TodoCheckbox({ checked, onChange }) {
+export default function TodoCheckbox({ checked, onChange }) {
   return (
     <input
       type="checkbox"

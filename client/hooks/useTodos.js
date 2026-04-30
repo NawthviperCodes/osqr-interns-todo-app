@@ -1,4 +1,7 @@
-function useTodos(token, currentUser) {
+import React from "react";
+import todoService from "../services/todoService.js";
+
+export default function useTodos(token, currentUser) {
   const [todos, setTodos] = React.useState([]);
 
   React.useEffect(() => {

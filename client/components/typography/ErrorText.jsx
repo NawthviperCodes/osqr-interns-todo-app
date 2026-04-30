@@ -1,4 +1,4 @@
-function ErrorText({ children }) {
+export default function ErrorText({ children }) {
   if (!children) {
     return null;
   }
