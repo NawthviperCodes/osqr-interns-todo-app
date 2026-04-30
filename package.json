@@ -1,0 +1,31 @@
+{
+  "name": "osqr-interns",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/app.js",
+  "scripts": {
+    "start": "node server/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Appiawave-Technologies/OSQR-Interns.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Appiawave-Technologies/OSQR-Interns/issues"
+  },
+  "homepage": "https://github.com/Appiawave-Technologies/OSQR-Interns#readme",
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.5.0"
+  }
+}

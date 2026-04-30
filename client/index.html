@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div id="root"></div>
+
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel" src="/services/todoService.js"></script>
+  <script type="text/babel" src="/services/authService.js"></script>
+  <script type="text/babel" src="/services/tokenService.js"></script>
+
+  <script type="text/babel" src="/hooks/useAuth.js"></script>
+  <script type="text/babel" src="/hooks/useTodos.js"></script>
+
+  <script type="text/babel" src="/components/buttons/Button.jsx"></script>
+  <script type="text/babel" src="/components/buttons/IconButton.jsx"></script>
+
+  <script type="text/babel" src="/components/typography/Heading.jsx"></script>
+  <script type="text/babel" src="/components/typography/Text.jsx"></script>
+  <script type="text/babel" src="/components/typography/ErrorText.jsx"></script>
+
+  <script type="text/babel" src="/components/layout/PageContainer.jsx"></script>
+  <script type="text/babel" src="/components/layout/AppHeader.jsx"></script>
+  <script type="text/babel" src="/components/layout/LoadingState.jsx"></script>
+
+  <script type="text/babel" src="/components/auth/AuthToggle.jsx"></script>
+  <script type="text/babel" src="/components/auth/LoginForm.jsx"></script>
+  <script type="text/babel" src="/components/auth/RegisterForm.jsx"></script>
+
+  <script type="text/babel" src="/components/todos/TodoCheckbox.jsx"></script>
+  <script type="text/babel" src="/components/todos/TodoForm.jsx"></script>
+  <script type="text/babel" src="/components/todos/EmptyTodoState.jsx"></script>
+  <script type="text/babel" src="/components/todos/TodoItem.jsx"></script>
+  <script type="text/babel" src="/components/todos/TodoList.jsx"></script>
+
+  <script type="text/babel" src="/pages/AuthPage.jsx"></script>
+  <script type="text/babel" src="/pages/TodoPage.jsx"></script>
+
+  <script type="text/babel" src="/components/TodoApp.jsx"></script>
+  <script type="text/babel" src="/main.jsx"></script>
+</body>
+</html>
