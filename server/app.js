@@ -22,7 +22,7 @@ mongoose
 app.use(express.json());
 
 // ✅ ONLY serve built frontend (IMPORTANT)
-const builtClientPath = path.join(__dirname, "..", "client", "dist");
+const builtClientPath = path.join(__dirname, "..", "dist");
 app.use(express.static(builtClientPath));
 
 // ================== HELPERS ==================
