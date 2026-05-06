@@ -287,7 +287,7 @@ app.delete("/api/todos/:id", authMiddleware, async (req, res) => {
 
 // ================== FRONTEND CATCH-ALL ==================
 // MUST BE LAST
-app.get("*", (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.join(builtClientPath, "index.html"));
 });
 
