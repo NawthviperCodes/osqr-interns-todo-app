@@ -24,6 +24,7 @@
   "homepage": "https://github.com/Appiawave-Technologies/OSQR-Interns#readme",
   "devDependencies": {
     "@types/node": "^25.6.0",
+    "@vitejs/plugin-react": "^6.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.2"
   },

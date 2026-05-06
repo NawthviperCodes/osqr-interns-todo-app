@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
+const fs = require("fs");
 const crypto = require("crypto");
 const Todo = require("./models/todo");
 const User = require("./models/user");
@@ -21,8 +22,12 @@ mongoose
 // ================== MIDDLEWARE ==================
 app.use(express.json());
 
-// ✅ ONLY serve built frontend (IMPORTANT)
-const builtClientPath = path.join(__dirname, "..", "dist");
+// Serve the built frontend
+const rootDistPath = path.join(__dirname, "..", "dist");
+const clientDistPath = path.join(__dirname, "..", "client", "dist");
+const builtClientPath = fs.existsSync(path.join(rootDistPath, "index.html"))
+  ? rootDistPath
+  : clientDistPath;
 app.use(express.static(builtClientPath));
 
 // ================== HELPERS ==================
@@ -295,3 +300,4 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
