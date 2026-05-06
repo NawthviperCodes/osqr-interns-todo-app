@@ -7,22 +7,25 @@ const User = require("./models/user");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/todo-app";
-const SESSION_SECRET = process.env.SESSION_SECRET || "dev-secret-change-this";
+const MONGODB_URI =
+  process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/todo-app";
+const SESSION_SECRET =
+  process.env.SESSION_SECRET || "dev-secret-change-this";
 
+// ================== DATABASE ==================
 mongoose
   .connect(MONGODB_URI)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
+// ================== MIDDLEWARE ==================
 app.use(express.json());
 
+// ✅ ONLY serve built frontend (IMPORTANT)
 const builtClientPath = path.join(__dirname, "..", "client", "dist");
-const sourceClientPath = path.join(__dirname, "..", "client");
-
 app.use(express.static(builtClientPath));
-app.use(express.static(sourceClientPath));
 
+// ================== HELPERS ==================
 function hashPassword(password) {
   return crypto.createHash("sha256").update(password).digest("hex");
 }
@@ -34,10 +37,13 @@ function cleanText(value) {
 function createToken(user) {
   const payload = {
     userId: user._id.toString(),
-    exp: Date.now() + 7 * 24 * 60 * 60 * 1000
+    exp: Date.now() + 7 * 24 * 60 * 60 * 1000,
   };
 
-  const payloadString = Buffer.from(JSON.stringify(payload)).toString("base64url");
+  const payloadString = Buffer.from(JSON.stringify(payload)).toString(
+    "base64url"
+  );
+
   const signature = crypto
     .createHmac("sha256", SESSION_SECRET)
     .update(payloadString)
@@ -47,17 +53,13 @@ function createToken(user) {
 }
 
 function verifyToken(token) {
-  if (!token) {
-    return null;
-  }
+  if (!token) return null;
 
   const parts = token.split(".");
-
-  if (parts.length !== 2) {
-    return null;
-  }
+  if (parts.length !== 2) return null;
 
   const [payloadString, signature] = parts;
+
   const expectedSignature = crypto
     .createHmac("sha256", SESSION_SECRET)
     .update(payloadString)
@@ -65,7 +67,10 @@ function verifyToken(token) {
 
   if (
     signature.length !== expectedSignature.length ||
-    !crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSignature))
+    !crypto.timingSafeEqual(
+      Buffer.from(signature),
+      Buffer.from(expectedSignature)
+    )
   ) {
     return null;
   }
@@ -73,7 +78,9 @@ function verifyToken(token) {
   let payload;
 
   try {
-    payload = JSON.parse(Buffer.from(payloadString, "base64url").toString("utf8"));
+    payload = JSON.parse(
+      Buffer.from(payloadString, "base64url").toString("utf8")
+    );
   } catch (error) {
     return null;
   }
@@ -110,10 +117,7 @@ async function authMiddleware(req, res, next) {
   next();
 }
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(sourceClientPath, "index.html"));
-});
-
+// ================== AUTH ROUTES ==================
 app.post("/api/register", async (req, res) => {
   try {
     const name = cleanText(req.body.name);
@@ -121,7 +125,9 @@ app.post("/api/register", async (req, res) => {
     const password = cleanText(req.body.password);
 
     if (!name || !email || !password) {
-      return res.status(400).json({ message: "Name, email, and password are required" });
+      return res
+        .status(400)
+        .json({ message: "Name, email, and password are required" });
     }
 
     const existingUser = await User.findOne({ email });
@@ -133,7 +139,7 @@ app.post("/api/register", async (req, res) => {
     const user = new User({
       name,
       email,
-      password: hashPassword(password)
+      password: hashPassword(password),
     });
 
     await user.save();
@@ -150,13 +156,17 @@ app.post("/api/login", async (req, res) => {
     const password = cleanText(req.body.password);
 
     if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required" });
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
     }
 
     const user = await User.findOne({ email });
 
     if (!user || user.password !== hashPassword(password)) {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res
+        .status(401)
+        .json({ message: "Invalid email or password" });
     }
 
     const token = createToken(user);
@@ -167,8 +177,8 @@ app.post("/api/login", async (req, res) => {
       user: {
         id: user._id,
         name: user.name,
-        email: user.email
-      }
+        email: user.email,
+      },
     });
   } catch (err) {
     res.status(500).json({ message: "Error logging in" });
@@ -180,8 +190,8 @@ app.get("/api/me", authMiddleware, async (req, res) => {
     user: {
       id: req.user._id,
       name: req.user.name,
-      email: req.user.email
-    }
+      email: req.user.email,
+    },
   });
 });
 
@@ -189,9 +199,12 @@ app.post("/api/logout", authMiddleware, async (req, res) => {
   res.json({ message: "Logged out successfully" });
 });
 
+// ================== TODO ROUTES ==================
 app.get("/api/todos", authMiddleware, async (req, res) => {
   try {
-    const todos = await Todo.find({ user: req.user._id }).sort({ createdAt: -1 });
+    const todos = await Todo.find({ user: req.user._id }).sort({
+      createdAt: -1,
+    });
     res.json(todos);
   } catch (err) {
     res.status(500).json({ message: "Error getting todos" });
@@ -208,7 +221,7 @@ app.post("/api/todos", authMiddleware, async (req, res) => {
 
     const newTodo = new Todo({
       title,
-      user: req.user._id
+      user: req.user._id,
     });
 
     const savedTodo = await newTodo.save();
@@ -222,7 +235,7 @@ app.put("/api/todos/:id", authMiddleware, async (req, res) => {
   try {
     const todo = await Todo.findOne({
       _id: req.params.id,
-      user: req.user._id
+      user: req.user._id,
     });
 
     if (!todo) {
@@ -233,7 +246,9 @@ app.put("/api/todos/:id", authMiddleware, async (req, res) => {
       const title = cleanText(req.body.title);
 
       if (!title) {
-        return res.status(400).json({ message: "Title cannot be empty" });
+        return res
+          .status(400)
+          .json({ message: "Title cannot be empty" });
       }
 
       todo.title = title;
@@ -254,7 +269,7 @@ app.delete("/api/todos/:id", authMiddleware, async (req, res) => {
   try {
     const deletedTodo = await Todo.findOneAndDelete({
       _id: req.params.id,
-      user: req.user._id
+      user: req.user._id,
     });
 
     if (!deletedTodo) {
@@ -263,13 +278,20 @@ app.delete("/api/todos/:id", authMiddleware, async (req, res) => {
 
     res.json({
       message: "Todo deleted",
-      deletedTodo: deletedTodo
+      deletedTodo,
     });
   } catch (err) {
     res.status(400).json({ message: "Error deleting todo" });
   }
 });
 
+// ================== FRONTEND CATCH-ALL ==================
+// MUST BE LAST
+app.get("*", (req, res) => {
+  res.sendFile(path.join(builtClientPath, "index.html"));
+});
+
+// ================== START SERVER ==================
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
